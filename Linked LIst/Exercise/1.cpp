@@ -1,5 +1,7 @@
 // Q.1) Write a function to count the number of occurrences of an element in a singly linked list.
 // Q.2) Write a function to find the maximum and minimum value from a singly linked list.
+// Q.3) Write a function to check if two linked lists are identical.
+
 
 #include <iostream>
 using namespace std;
@@ -52,7 +54,6 @@ struct node *createList(struct node *start)
         cin >> p;
         start = insertAtLast(start, p);
     }
-    cout << "The Singlely linked list is : " << endl;
     return start;
 }
 
@@ -62,6 +63,7 @@ void Traversal(struct node *start)
     {
         cout << "List is empty.";
     }
+    cout << "The Singlely linked list is : " << endl;
     while (start != NULL)
     {
         cout << start->data << " ";
@@ -70,7 +72,7 @@ void Traversal(struct node *start)
     cout << endl;
 }
 
-// Here we count the occurrence of element frrom question 1.
+// Q1. Creating function for number of occurrences of a list.
 void countElement(struct node *start, int item)
 {
     int count = 0;
@@ -92,7 +94,7 @@ void countElement(struct node *start, int item)
     }
 }
 
-// Here we find the maximum and minimum value from question 2.
+// Q2. Creating a function for finding maximum and minimum value.
 void MaxMin(struct node *start)
 {
     int min = start->data;
@@ -114,15 +116,51 @@ void MaxMin(struct node *start)
     cout << "The maximum value is : " << max << endl;
 }
 
+// Q3. Creating a function to check two list identical or not.
+bool Identical(struct node *start, struct node *start1)
+{
+    struct node *p = start;
+    struct node *q = start1;
+    while(p != NULL && q != NULL)
+    {
+        if(p -> data != q -> data)
+        {
+            return false;
+        }
+        p = p -> next;
+        q = q -> next;
+    }
+    if(p || q)
+    {
+        return false;
+    }
+    else 
+    {
+        return true;
+    }
+}
+
 int main()
 {
     int n;
-    struct node *head;
-    head = new (struct node);
+    struct node *head, *head1;
+    head = new(struct node);
     head = createList(head);
     Traversal(head);
-    cout << "Which element you want to count? : " << endl;
-    cin >> n;
-    countElement(head, n);
-    MaxMin(head);
+    // cout << "Which element you want to count? : " << endl;
+    // cin >> n;
+    // countElement(head, n);
+    // MaxMin(head);
+    head1 = new(struct node);
+    head1 = createList(head1);
+    Traversal(head1);
+    if(Identical(head, head1))
+    {
+        cout << "Both list are same" << endl;
+    }
+    else
+    {
+        cout << "List are not same." << endl;
+    }
+    return 0;
 }
