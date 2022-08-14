@@ -149,6 +149,13 @@ Node *CreateList(Node *start)
 Node *Deletation(Node *start, int item)
 {
     Node *temp, *p;
+    if(start -> info == item)
+    {
+        temp = start;
+        start = start -> link;
+        free(temp);
+        return start;
+    }
     p = start;
     while(p != NULL)
     {
@@ -161,6 +168,29 @@ Node *Deletation(Node *start, int item)
         }
         p = p -> link;
     }
+}
+
+Node *DeleteInPos(Node *start, int pos)
+{
+    Node *temp, *p;
+    if(pos == 1)        // For first position.
+    {
+        temp = start;
+        start = start -> link;
+        free(temp);
+        return start;
+    }
+    int count = 2;      // For other position.
+    p = start;
+    while(count < pos)
+    {
+        p = p -> link;
+        count++;
+    }
+    temp = p -> link;
+    p -> link = temp -> link;
+    free(temp);
+    return start;
 }
 
 Node *Reverse(Node *start)
@@ -204,9 +234,11 @@ int main()
     // Traversal(head);
     head = CreateList(head);
     Traversal(head);
-    // head = Deletation(head, 50);
+    // head = Deletation(head, 10);
     // Traversal(head);
-    head = Reverse(head);
+    head = DeleteInPos(head, 2);
     Traversal(head);
+    // head = Reverse(head);
+    // Traversal(head);
     return 0;
 }
